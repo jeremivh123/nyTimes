@@ -1,0 +1,83 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>NY Times Search</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="style.css">
+    </head>
+    
+    <body>
+        <div id="header">
+            New York Times Search
+        </div>
+
+        <div id="container">
+
+            <div id="search-info">
+                <h1>Search Parameters</h1>
+
+                <div class="searchAreas">
+                    <input id="first" type="text" placeholder="Search..">
+                    <input id="second" type="text" placeholder="# Of Records To Retrieve..">
+                    <input id="third" type="text" placeholder="Start Year(Optional)..">
+                    <input id="forth" type="text" placeholder="End Year(Optional)">
+                </div>
+
+                <div class="search-btns">
+                    <button id="search">Search</button>
+                    <button id="clear">Clear Results</button>
+                </div>
+            </div>
+
+            <div id="search-results">
+                <h2>Top Articles</h2>
+
+                <div id="resultContainer">
+
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+             $("#search").on("click", function() {
+      var apiKey = '5Y5P8FXEaJnj3BJOrFf1yHrmdzsPewAH';
+       var  query = 'corona';
+      var topic = $("#first").val();
+      var amount = $("#second").val();
+      var startYear = $("#third").val();
+      var endYear = $("forth").val();
+    var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&api-key=" + apiKey;
+console.log(topic);
+console.log()
+
+$.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+      .then(function (response) {
+                console.log(response);
+                var results = response.response;
+                console.log(results);
+
+                for (var i = 0; i < results.length; i++) {
+                    var resultDiv = $("#resultContainer");
+                    var p = $("<p>").text(results);
+                    resultDiv.prepend(p);
+
+                //     var rating = results[i].rating;
+
+                    
+                //     var personImage = $("<img>");
+                //     resultDiv.attr("src", results[i].images.fixed_height.url);
+
+                   
+                //     resultDiv.prepend(personImage);
+
+                //     $("#gifs-appear-here").prepend(gifDiv);
+                }
+            });
+             });
+   
+        </script>
+    </body>
+</html>
